@@ -1,0 +1,9 @@
+<%- include('../partials/_navbar') %>
+
+<section class="message-success">
+  <h2>Message Sent!</h2>
+  <p>Thank you, <%= senderName %>. Your message has been sent to <%= owner.username || "the property owner" %>.</p>
+  <a href="/properties" class="back-btn">⬅ Back to Listings</a>
+</section>
+
+<%- include('../partials/_footer') %>

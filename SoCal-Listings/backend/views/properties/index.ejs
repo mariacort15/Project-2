@@ -1,0 +1,35 @@
+<%- include('../partials/_navbar') %>
+
+<section class="grid">
+  <% properties.forEach(property => { %>
+    <div class="card" data-id="<%= property._id %>">
+      <img src="<%= property.image %>" alt="<%= property.title %>">
+      <h2><%= property.title %></h2>
+      <p class="price">$<%= property.price.toLocaleString() %></p>
+      <p><%= property.city %> — <%= property.propertyType %></p>
+      <small><%= property.bedrooms %> Beds • <%= property.bathrooms %> Baths</small>
+      <p><%= property.description %></p>
+
+      <div class="buttons">
+        <a href="/properties/<%= property._id %>" class="view-btn">View</a>
+        <button class="edit-btn">Edit</button>
+        <button class="delete-btn" data-id="<%= property._id %>">Delete</button>
+      </div>
+
+      <!-- Hidden Edit Form -->
+      <form class="edit-form" style="display:none;">
+        <input type="text" name="title" value="<%= property.title %>">
+        <input type="number" name="price" value="<%= property.price %>">
+        <input type="text" name="city" value="<%= property.city %>">
+        <input type="number" name="bedrooms" value="<%= property.bedrooms %>">
+        <input type="number" name="bathrooms" value="<%= property.bathrooms %>">
+        <textarea name="description"><%= property.description %></textarea>
+        <button type="submit">Save</button>
+        <button type="button" class="cancel-btn">Cancel</button>
+      </form>
+    </div>
+  <% }) %>
+</section>
+
+<script src="/js/main.js"></script>
+<%- include('../partials/_footer') %>

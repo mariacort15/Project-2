@@ -1,0 +1,55 @@
+<%- include('../partials/_navbar') %>
+
+<section class="dashboard">
+  <h1>Owner Dashboard</h1>
+  <p>Welcome back! Here’s an overview of your listings and recent inquiries.</p>
+
+  <div class="dashboard-section">
+    <h2>Your Properties</h2>
+
+    <% if (properties.length === 0) { %>
+      <p>You have no properties yet. <a href="/properties/new">Add one here</a>.</p>
+    <% } else { %>
+      <div class="properties-grid">
+        <% properties.forEach(property => { %>
+          <div class="property-card">
+            <img src="<%= property.image %>" alt="<%= property.title %>">
+            <h3><%= property.title %></h3>
+            <p>$<%= property.price.toLocaleString() %>/month</p>
+            <p><%= property.city %></p>
+            <small>Posted on <%= property.datePosted.toDateString() %></small>
+
+            <div class="buttons">
+              <a href="/properties/<%= property._id %>" class="view-btn">View</a>
+              <a href="/properties/<%= property._id %>/edit" class="edit-btn">Edit</a>
+              <form action="/properties/<%= property._id %>?_method=DELETE" method="POST">
+                <button type="submit" class="delete-btn">Delete</button>
+              </form>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+
+  <div class="dashboard-section">
+    <h2>Recent Messages</h2>
+
+    <% if (messages.length === 0) { %>
+      <p>No new messages yet.</p>
+    <% } else { %>
+      <ul class="message-list">
+        <% messages.forEach(msg => { %>
+          <li>
+            <p><strong>From:</strong> <%= msg.senderName %> (<%= msg.senderEmail %>)</p>
+            <p><strong>Regarding:</strong> <%= msg.property ? msg.property.title : "Deleted Property" %></p>
+            <p><strong>Message:</strong> <%= msg.message %></p>
+            <small>Sent on <%= msg.dateSent.toDateString() %></small>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </div>
+</section>
+
+<%- include('../partials/_footer') %>

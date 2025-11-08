@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | SoCal Listings</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('../partials/_navbar') %>
+
+  <section class="form-section">
+    <h2>Welcome Back</h2>
+    <p class="form-subtitle">Log in to manage your listings or view your saved homes.</p>
+
+    <form id="loginForm">
+      <input type="email" name="email" placeholder="Email Address" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+  </section>
+
+  <script>
+    const loginForm = document.getElementById("loginForm");
+
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(loginForm);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+
+        if (!res.ok) {
+          alert(result.message || "Login failed");
+          return;
+        }
+
+        localStorage.setItem("token", result.token);
+        localStorage.setItem("userRole", result.user.role);
+        localStorage.setItem("userName", result.user.fullName);
+
+        alert("Logged in as " + result.user.fullName + " (" + result.user.role + ")");
+        window.location.href = "/";
+      } catch (err) {
+        console.error(err);
+        alert("Something went wrong. Try again.");
+      }
+    });
+  </script>
+</body>
+</html>

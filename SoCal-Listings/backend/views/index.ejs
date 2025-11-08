@@ -1,0 +1,103 @@
+<body>
+  <%- include('partials/_navbar') %>
+
+  <h2>Add a New Property</h2>
+<form id="propertyForm">
+  <input type="text" name="title" placeholder="Title" required />
+  <input type="number" name="price" placeholder="Price" required />
+  <input type="text" name="city" placeholder="City" required />
+  <input type="text" name="propertyType" placeholder="Type (e.g. Apartment)" required />
+  <input type="number" name="bedrooms" placeholder="Bedrooms" />
+  <input type="number" name="bathrooms" placeholder="Bathrooms" />
+  <input type="text" name="image" placeholder="Image URL" />
+  <textarea name="description" placeholder="Description"></textarea>
+  <button type="submit">Add Property</button>
+</form>
+
+  <section class="grid">
+    <% properties.forEach(property => { %>
+      <div class="card" data-id="<%= property._id %>">
+        <img src="<%= property.image %>" alt="<%= property.title %>">
+        <h2><%= property.title %></h2>
+        <p><%= property.city %> — $<%= property.price.toLocaleString() %></p>
+        <small><%= property.propertyType %> • <%= property.bedrooms %> Bed • <%= property.bathrooms %> Bath</small>
+        <p><%= property.description %></p>
+  
+        <div class="buttons">
+          <button class="edit-btn">Edit</button>
+          <button class="delete-btn">Delete</button>
+        </div>
+  
+    
+        <form class="edit-form" style="display:none;">
+          <input type="text" name="title" value="<%= property.title %>">
+          <input type="number" name="price" value="<%= property.price %>">
+          <input type="text" name="city" value="<%= property.city %>">
+          <input type="number" name="bedrooms" value="<%= property.bedrooms %>">
+          <input type="number" name="bathrooms" value="<%= property.bathrooms %>">
+          <textarea name="description"><%= property.description %></textarea>
+          <button type="submit">Save</button>
+          <button type="button" class="cancel-btn">Cancel</button>
+        </form>
+      </div>
+    <% }) %>
+  </section>  
+</body>
+
+<script>
+  const form = document.getElementById("propertyForm");
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const token = localStorage.getItem("token");
+      const role = localStorage.getItem("userRole");
+
+      // Require login
+      if (!token) {
+        alert("You must be logged in to add a property.");
+        window.location.href = "/auth/sign-in";
+        return;
+      }
+
+      // Allow only Owners or Admins
+      if (role !== "Owner" && role !== "Admin") {
+        alert("Only Owners or Admins can add properties.");
+        return;
+      }
+
+      const formData = new FormData(form);
+      const propertyData = Object.fromEntries(formData.entries());
+  
+
+      try {
+        const res = await fetch("/api/properties", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+          },
+          body: JSON.stringify(propertyData)
+        });
+
+        if (res.ok) {
+          alert("Property added successfully!");
+          window.location.reload();
+        } else {
+          const error = await res.json().catch(() => ({}));
+          alert("Uh Oh" + (error.message || "Error adding property."));
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Server error — please try again.");
+      }
+    });
+  }
+
+const role = localStorage.getItem("userRole");
+if (role === "Owner" || role === "Admin") {
+  document.querySelectorAll(".buttons").forEach(btn => {
+    btn.style.display = "block";
+  });
+}
+</script>

@@ -1,0 +1,30 @@
+<nav class="navbar">
+    <a href="/" class="logo">SoCal Listings</a>
+  
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/auth/sign-up">Sign Up</a>
+      <a href="/auth/sign-in">Login</a>
+      <a href="#" id="logoutBtn" style="display:none;">Logout</a>
+    </div>
+  </nav>
+  
+  <script>
+    // Show/hide Logout depending on token
+    const token = localStorage.getItem("token");
+    const logoutBtn = document.getElementById("logoutBtn");
+  
+    if (token && logoutBtn) {
+      logoutBtn.style.display = "inline-block";
+    }
+  
+    if (logoutBtn) {
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userRole");
+        localStorage.removeItem("userName");
+        alert("You have been logged out.");
+        window.location.href = "/";
+      });
+    }
+  </script>

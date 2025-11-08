@@ -1,0 +1,20 @@
+<%- include('../partials/_navbar') %>
+
+<section class="contact-owner">
+  <h2>Contact <%= owner.username || "the Property Owner" %></h2>
+
+  <% if (property) { %>
+    <p>Regarding: <strong><%= property.title %></strong> - <%= property.city %></p>
+  <% } %>
+
+  <form action="/contact-owner/<%= owner._id %>?propertyId=<%= property?._id %>" method="POST" class="contact-form">
+    <input type="text" name="senderName" placeholder="Your Name" required>
+    <input type="email" name="senderEmail" placeholder="Your Email" required>
+    <input type="tel" name="phone" placeholder="Phone (optional)">
+    <textarea name="message" placeholder="Your message..." rows="5" required></textarea>
+
+    <button type="submit">Send Message</button>
+  </form>
+</section>
+
+<%- include('../partials/_footer') %>

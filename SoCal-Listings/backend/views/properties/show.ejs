@@ -1,0 +1,149 @@
+<%- include('../partials/_navbar') %>
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateListing",
+    "name": "<%= property.title %>",
+    "description": "<%= property.description %>",
+    "url": "https://localhost:5000/properties/<%= property._id %>",
+    "datePosted": "<%= property.datePosted.toISOString() %>",
+    "mainEntityOfPage": "https://localhost:5000/properties/<%= property._id %>",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "<%= property.address.street %>",
+      "addressLocality": "<%= property.city %>",
+      "addressRegion": "CA",
+      "postalCode": "<%= property.address.zipCode %>",
+      "addressCountry": "US"
+    },
+    "image": [
+      "<%= property.image %>"
+    ],
+    "offers": {
+      "@type": "Offer",
+      "price": "<%= property.price %>",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock"
+    },
+    "seller": {
+      "@type": "RealEstateAgent",
+      "name": "<%= property.owner?.username || 'Property Owner' %>",
+      "email": "info@socallistings.com"
+    }
+  }
+  </script>
+
+  RealEstateListing  
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "RealEstateListing",
+  "name": "3-Bedroom House in Los Angeles",
+  "description": "A beautiful 3-bedroom, 2-bathroom house with a spacious backyard and pool in Los Angeles.",
+  "url": "https://socallistings.com/listings/12345",
+  "datePosted": "2025-11-04",
+  "mainEntityOfPage": "https://socallistings.com/listings/12345",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "123 Sunset Blvd",
+    "addressLocality": "Los Angeles",
+    "addressRegion": "CA",
+    "postalCode": "90028",
+    "addressCountry": "US"
+  },
+  "image": [
+    "https://socallistings.com/images/listings/12345/main.jpg"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "price": "1250000",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock"
+  },
+  "seller": {
+    "@type": "RealEstateAgent",
+    "name": "Jane Doe",
+    "telephone": "+1-555-555-5555",
+    "email": "jane@socallistings.com"
+  }
+}
+</script>
+
+Place  
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Place",
+  "name": "3-Bedroom House in Los Angeles",
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 34.0522,
+    "longitude": -118.2437
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "123 Sunset Blvd",
+    "addressLocality": "Los Angeles",
+    "addressRegion": "CA",
+    "postalCode": "90028",
+    "addressCountry": "US"
+  }
+}
+</script>
+
+Product  
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "3-Bedroom House in Los Angeles",
+  "description": "A beautifully maintained home with 3 bedrooms and 2 bathrooms in the heart of Los Angeles.",
+  "image": [
+    "https://socallistings.com/images/listings/12345/main.jpg"
+  ],
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "USD",
+    "price": "1250000",
+    "availability": "https://schema.org/InStock",
+    "url": "https://socallistings.com/listings/12345"
+  }
+}
+</script>
+
+<section class="property-details">
+  <div class="property-image">
+    <img src="<%= property.image %>" alt="<%= property.title %>">
+  </div>
+
+  <div class="property-info">
+    <h1><%= property.title %></h1>
+    <h3><%= property.city %></h3>
+    <p class="price">$<%= property.price.toLocaleString() %>/month</p>
+
+    <p><strong>Type:</strong> <%= property.propertyType %></p>
+    <p><strong>Address:</strong> <%= property.address %></p>
+    <p><strong>Bedrooms:</strong> <%= property.bedrooms %></p>
+    <p><strong>Bathrooms:</strong> <%= property.bathrooms %></p>
+
+    <p class="desc"><%= property.description %></p>
+
+    <p class="date-posted">
+      <small>Listed on <%= property.datePosted.toDateString() %></small>
+    </p>
+
+    <% if (property.owner) { %>
+      <p class="owner-info">
+        <strong>Posted by:</strong>
+        <%= property.owner.username || "Property Owner" %>
+      </p>
+    <% } %>
+
+    <div class="actions">
+      <a href="/properties" class="back-btn">Back to Listings</a>
+      <a href="/contact-owner/<%= property.owner?._id %>?propertyId=<%= property._id %>" class="contact-btn">Contact Owner</a>
+    </div>
+</section>
+
+<%- include('../partials/_footer') %>

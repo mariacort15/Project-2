@@ -1,0 +1,43 @@
+### Get all properties
+GET http://localhost:5000/api/properties
+Content-Type: application/json
+
+###
+
+### Get property by ID
+GET http://localhost:5000/api/properties/{{property_id}}
+Content-Type: application/json
+
+###
+
+### Create new property
+POST http://localhost:5000/api/properties
+Content-Type: application/json
+
+{
+  "title": "Modern Family Home in Bakersfield",
+  "description": "Beautiful 3 bedroom home with backyard and pool.",
+  "image": "https://images.unsplash.com/photo-1560185127-6ed189bf04bb",
+  "price": 350000,
+  "address": "123 Palm Street",
+  "city": "Bakersfield",
+  "propertyType": "House",
+  "bedrooms": 3,
+  "bathrooms": 2
+}
+
+###
+
+### Update property
+PUT http://localhost:5000/api/properties/{{property_id}}
+Content-Type: application/json
+
+{
+  "price": 365000,
+  "city": "Bakersfield"
+}
+
+###
+
+### Delete property
+DELETE http://localhost:5000/api/properties/{{property_id}}
