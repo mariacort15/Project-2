@@ -45,7 +45,7 @@ const propertyListingSchema = new mongoose.Schema({
     type: Number
   },
   images: [{
-    type: String // Array of image URLs
+    type: String 
   }],
   listedDate: {
     type: Date,
@@ -60,7 +60,7 @@ const propertyListingSchema = new mongoose.Schema({
     phone: String,
     email: String
   },
-  features: [String], // e.g. ['Pool', 'Garage', 'Fireplace']
+  features: [String], 
   listingAgent: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'

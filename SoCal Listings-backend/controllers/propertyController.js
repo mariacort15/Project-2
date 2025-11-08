@@ -1,8 +1,8 @@
 import Property from "../models/Property.js";
 
-const PropertyListing = require('../models/PropertyListing');
+const PropertyListing = require('../models/PropertyListing.js');
 
-// Get ALL Properties
+
 export const getProperties = async (req, res) => {
   try {
     const properties = await Property.find();
@@ -11,7 +11,7 @@ export const getProperties = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-// Get single Property
+
 export const getPropertyById = async (req, res) => {
   try {
     const property = await Property.findById(req.params.id);
@@ -22,7 +22,7 @@ export const getPropertyById = async (req, res) => {
   }
 };
 
-// Create new property
+
 export const createProperty = async (req, res) => {
   try {
     const userId = req.user?.id;
@@ -45,7 +45,7 @@ export const createProperty = async (req, res) => {
   }
 }
 
-// update property
+
 export const updateProperty = async (req, res) => {
   try {
     const property = await Property.findById(req.params.id);
@@ -66,7 +66,7 @@ export const updateProperty = async (req, res) => {
 };
 
 
-// delete property
+
 export const deleteProperty = async (req, res) => {
   try {
     const property = await Property.findById(req.params.id);
