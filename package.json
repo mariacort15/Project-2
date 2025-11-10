@@ -30,5 +30,16 @@
     "mongodb": "^6.20.0",
     "mongoose": "^8.19.3",
     "nodemon": "^3.1.10"
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariacort15/Project-2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mariacort15/Project-2/issues"
+  },
+  "homepage": "https://github.com/mariacort15/Project-2#readme"
 }
