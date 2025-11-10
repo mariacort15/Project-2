@@ -432,3 +432,21 @@ footer {
 .message-list li:last-child {
   border-bottom: none;
 }
+
+.alert {
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.alert.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.alert.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}

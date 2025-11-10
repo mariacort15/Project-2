@@ -37,7 +37,6 @@ const userSchema = new mongoose.Schema({
       "https://res.cloudinary.com/demo/image/upload/v1692380310/default-user.png",
   },
 
-  // If the user is an owner, they can have multiple properties
   propertiesOwned: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -45,7 +44,6 @@ const userSchema = new mongoose.Schema({
     },
   ],
 
-  // If the user is a tenant, they might rent one property
   propertyRented: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Property",
@@ -55,6 +53,13 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  
+  savedProperties: [
+    { 
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'Property',
+     }
+    ],
 });
 
 

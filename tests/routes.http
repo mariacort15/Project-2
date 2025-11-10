@@ -41,3 +41,16 @@ Content-Type: application/json
 
 ### Delete property
 DELETE http://localhost:5000/api/properties/{{property_id}}
+
+### LOGIN
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "youremail@example.com",
+  "password": "yourpassword"
+}
+
+### OWNER DASHBOARD (paste your token below)
+GET http://localhost:5000/owner/dashboard
+Authorization: Bearer YOUR_TOKEN_HERE

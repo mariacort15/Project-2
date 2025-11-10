@@ -1,0 +1,13 @@
+<h2>My Property Listings</h2>
+
+<% if (listings.length === 0) { %>
+  <p>No listings posted yet.</p>
+<% } else { %>
+  <ul>
+    <% listings.forEach(property => { %>
+      <li>
+        <strong><%= property.title %></strong> — <%= property.city %> — $<%= property.price %>
+      </li>
+    <% }) %>
+  </ul>
+<% } %>

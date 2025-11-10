@@ -11,13 +11,44 @@ import authRoutes from "./routes/authRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import ownerRoutes from "./routes/ownerRoutes.js";
 
-dotenv.config();
-connectDB();
+const userRoutes = require("./routes/userRoutes");
+const authApiRoutes = require("./routes/authApiRoutes");
+const authViewRoutes = require("./routes/authViewRoutes");
+const session = require('express-session');
+const flash = require('connect-flash');
+
+require('dotenv').config(); 
+
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.error("MongoDB connection error:", err));
+
+
+app.use(
+  session({
+    secret: 'secret-key',
+    resave: false,
+    saveUninitialized: true
+  })
+);
+
+app.use(flash());
+
+
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  next();
+});
+
+
+app.use("/api/auth", authApiRoutes); 
+app.use("/auth", authViewRoutes);   
+
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -33,6 +64,9 @@ app.use("/api/properties", propertyRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/", messageRoutes);
 app.use("/", ownerRoutes);
+app.use("/owner", ownerRoutes);
+app.use("/users", userRoutes);
+app.use("/api/users", userRoutes);
 
 
 app.get("/", async (req, res) => {
@@ -40,14 +74,6 @@ app.get("/", async (req, res) => {
   res.render("index", { properties });
 });
 
-
-app.get("/auth/sign-up", (req, res) => {
-  res.render("auth/sign-up");
-});
-
-app.get("/auth/sign-in", (req, res) => {
-  res.render("auth/sign-in");
-});
 
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

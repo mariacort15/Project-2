@@ -1,0 +1,9 @@
+<h2>User Profile</h2>
+<p>Name: <%= user.name %></p>
+<p>Email: <%= user.email %></p>
+
+<form action="/users/update" method="POST">
+  <input type="text" name="name" value="<%= user.name %>" />
+  <input type="email" name="email" value="<%= user.email %>" />
+  <button type="submit">Update Profile</button>
+</form>

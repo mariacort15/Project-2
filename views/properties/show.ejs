@@ -144,6 +144,11 @@ Product
       <a href="/properties" class="back-btn">Back to Listings</a>
       <a href="/contact-owner/<%= property.owner?._id %>?propertyId=<%= property._id %>" class="contact-btn">Contact Owner</a>
     </div>
+
+    <form action="/api/users/save/<%= property._id %>" method="POST">
+      <button type="submit">Save Property</button>
+    </form>
+
 </section>
 
 <%- include('../partials/_footer') %>
